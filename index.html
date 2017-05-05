@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>商品开单页面</title>
-    <link href="/css/bill.css" rel="stylesheet" />
-    <link href="/css/jquery.autocomplete.css" rel="stylesheet" />
+    <link href="css/bill.css" rel="stylesheet" />
+    <link href="css/jquery.autocomplete.css" rel="stylesheet" />
     <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
     <script type="text/javascript" src="js/jquery.artDialog.source.js"></script>
     <script type="text/javascript" src="js/artDialog.iframeTools.js"></script>
@@ -17,18 +17,355 @@
         $(function () {
             $.getJSON("js/customer.json", function (data) {
                 customers = data;
-                //alert(customers.length);
             });
 
             $.getJSON("js/product.json", function (data) {
                 products = data;
-                alert(products.length);
             });
+
+            insertRow();
 
         })
     </script>
 </head>
 <body>
-    
+    <form action="#" method="post">
+        <input id="DETAIL" name="DETAIL" type="hidden" value="" /><input data-val="true" data-val-number="字段 TOTALMONEY 必须是一个数字。" data-val-required="The TOTALMONEY field is required." id="TOTALMONEY" name="TOTALMONEY" type="hidden" value="0" />    
+        <table class="tableEditHead" style="z-index:0; margin-top:50px;">
+            <colgroup>
+                <col style="width:10px;" />
+                <col style="width:65px; text-align:right;" />
+                <col style="width:50px;" />
+                <col style="width:120px;" />
+                <col />
+                <col style="width:140px;" />
+                <col style="width:140px;" />
+                <col style="width:40px;" />
+                <col style="width:140px;" />
+                <col style="width:75px;" />
+                <col style="width:75px;" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <td colspan="10" style="text-align:center;letter-spacing:10px; color:#0094ff"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>客户姓名：</td>
+                    <td colspan="2">
+                        <input id="OENTITYCODE" name="OENTITYCODE" ondblclick="OpenSelectCustomer()" type="text" value="" /><!--<input id="oentitycode" name="oentitycode" ondblclick="OpenSelectCustomer()"/>-->/
+                        <div class="tipDiv" id="tipOENTITYCODE"></div>
+                    </td>
+                    <td><input id="OENTITYNAME" name="OENTITYNAME" type="text" value="" /></td>
+                    <td></td>
+                    <td></td>
+                    <td colspan="2">联系人：<input id="OMANAGER" name="OMANAGER" style="width:75px" type="text" value="" /></td>
+                    <td colspan="2">电话：<input id="OTEL" name="OTEL" style="width:90px" type="text" value="" /></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>地　　址：</td>
+                    <td colspan="7"><input id="OADDRESS" name="OADDRESS" style="width:90%" type="text" value="" /></td>
+                    <td colspan="2"> <input id="PASSWORD" name="PASSWORD" type="hidden" value="687140" /></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>单据备注：</td>
+                    <td colspan="8"><input id="REMARK" name="REMARK" style="width:83%" type="text" value="" /></td>
+                    <td style="text-align:right"><div class="addrow" onclick="insertRow({})">增加一行</div></td>
+                </tr>
+            </thead>
+        </table>
+        <table class="tableEditBody">
+            <colgroup>
+                <col style="width:110px;" />
+                <col style="width:60px;" />
+                <col />
+                <col style="width:60px;" />
+                <col style="width:35px;" />
+                <col style="width:65px;" />
+                <col style="width:50px;" />
+                <col style="width:50px;" />
+                <col style="width:75px;" />
+                <col style="width:40px;" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>编码</th>
+                    <th>货号</th>
+                    <th>名称</th>
+                    <th>规格</th>
+                    <th>单位</th>
+                    <th>生产日期</th>
+                    <th>数量</th>
+                    <th>单价</th>
+                    <th>小计</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="sumtr">
+                    <td colspan="5" style="text-align:right;" id="chsum"></td>
+                    <td colspan="3" style="text-align:right;" id="countsum">0</td>
+                    <td colspan="2"><div class="addrow" onclick="insertRow(Pro)">增加一行</div></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>    
+    <table style="margin-top:10px; width:100%;">
+        <tr>
+            <td></td>
+            <td style="width:100px;"><div class="addrow" style="text-align:center;">保　存</div></td>
+            <td> </td>
+        </tr>
+    </table>
 </body>
 </html>
+<script type="text/javascript">
+    function insertRow(product) {
+        var row;
+        var num = Math.round(Math.random() * 1000000);
+        while ($("#tr_" + num).size() > 0) {
+            num = Math.round(Math.random() * 1000000);
+        }
+        //一张单据只多能录入商品数
+
+        var promptcount = parseInt("40");
+        var allowcount = parseInt("120");
+        if (promptcount > 0 && promptcount < allowcount) {
+            if ($("tr[id^=tr_]").size() == promptcount) {
+                if (confirm("商品数量已达到指定的" + promptcount + "行,继续添加请忽略此提示。")) {
+                } else { return; }
+            }
+        } else {
+            if ($("tr[id^=tr_]").size() == allowcount) {
+                alert("一页只能录入" + allowcount + "行");
+                //return;
+            }
+        }
+
+        row = "<tr id='tr_" + num + "'>";
+        row += "<td><input id='pro_code_" + num + "'/></td>";//编码
+        row += "<td><input id='pro_no_" + num + "'/></td>";//货号
+        row += "<td><input id='pro_name_" + num + "'/></td>";//名称
+        row += "<td><input id='pro_spec_" + num + "'/></td>";//规格
+        row += "<td><input id='pro_unit_" + num + "'/></td>";//单位
+        row += "<td><input id='pro_ipc_" + num + "'/></td>";//生产日期
+        row += "<td><input id='pro_count_" + num + "'/></td>";//数量
+        row += "<td><input style='text-align:right;'id='pro_price_" + num + "'/></td>";// 单价
+        row += "<td><input style='text-align:right;'id='pro_sum_" + num + "'/></td>";//小计
+        row += "<td style='text-align:center'><a onclick='delRow(" + num + ")'  src='/Content/themes/common/Imgs/billsdel.gif' alt=''>删除</a></td>";//删除
+        row += "</tr>";
+        $("#sumtr").before(row);
+
+
+        //数量
+        $("#pro_count_" + num).blur(function () {
+            if ($("#pro_count_" + num).val() != "" && $("#pro_price_" + num).val() != "") {
+                $("#pro_sum_" + num).val(parseFloat(parseFloat($("#pro_count_" + num).val()) * parseFloat($("#pro_price_" + num).val())).toFixed(2)).change();
+            }
+        })
+
+        //单价
+        $("#pro_price_" + num).blur(function () {
+            if ($("#pro_count_" + num).val() != "" && $("#pro_price_" + num).val() != "") {
+                $("#pro_sum_" + num).val(parseFloat(parseFloat($("#pro_count_" + num).val()) * parseFloat($("#pro_price_" + num).val())).toFixed(2)).change();
+            }
+        })
+
+        //小计
+        $("#pro_sum_" + num).change(function () {
+
+            //核算小计是否为单价*数量
+            var _sum = parseFloat(parseFloat($("#pro_count_" + num).val()) * parseFloat($("#pro_price_" + num).val())).toFixed(2);
+            var _rsum = parseFloat($("#pro_sum_" + num).val()).toFixed(2);
+            if (_sum != _rsum) {
+                $("#pro_sum_" + num).css("color", "red");
+            } else {
+                $("#pro_sum_" + num).css("color", "black");
+            }
+
+            var sum = 0.00;
+            $("tr[id^=tr_]").each(function () {
+                var id = $(this).attr("id").replace("tr_", "");
+                if ($("#pro_sum_" + id).val().match(/^(-)?\d+(\.\d+)?$/)) {
+                    sum += parseFloat($("#pro_sum_" + id).val());
+                } else {
+                    sum = null;
+                    $("#chsum").html("");
+                    $("#countsum").html("<span style='color:red;'>无法计量总金额！</span>")
+                    return false;
+                }
+            })
+
+            if (sum != null) {
+                sum = sum.toFixed(2);
+                $("#chsum").text("合计(大写)：" + sum < 0 ? ("负" + chineseNumber(-sum)) : chineseNumber(sum));
+                $("#countsum").text("￥：" + sum);
+            }
+        })
+
+
+
+        //$("#tr_" + num + " input:text[id!='pro_code_" + num + "']").keypress(function (e) {
+        //回车事件
+        $("#tr_" + num + " input:text").keypress(function (e) {
+            if (e.which == 13)//判断所按是否回车键
+            {
+                var inputs = $(".tableEditBody").find(":text"); //获取表单中的所有输入框
+                var idx = inputs.index(this); //获取当前焦点输入框所处的位置
+                if (idx == inputs.length - 1)// 判断是否是最后一个输入框
+                {
+                    insertRow({});
+                    $("#tr_" + num).next().find("input:text").first().focus();
+                }
+                else {
+                    inputs[idx + 1].focus(); //设置焦点
+                    inputs[idx + 1].select(); //选中文字
+                }
+                return false; //取消默认的提交行为
+            }
+        });
+
+        $("#pro_code_" + num).keypress(function (e) {
+
+            if (e.which == 13)//判断所按是否回车键
+            {
+                $("#pro_ipc_" + num).focus().select();
+                return false; //取消默认的提交行为
+            }
+        });
+
+        //$("#pro_ipc_" + num).mask("99999999")
+        //生产日期
+        $("#pro_ipc_" + num).blur(function () {
+            if ($("#pro_code_" + num).val() == "" || $("#pro_ipc_" + num).val() == "")
+                return;
+
+            if ($("#pro_ipc_" + num).val() != "" && !$("#pro_ipc_" + num).val().isDate()) {
+                tipMessage("生产日期信息填写不正确");
+                $("#pro_ipc_" + num).select().focus();
+                return;
+            }
+        });
+        //生产日期获取焦点
+        $("#pro_ipc_" + num).focus(function () {
+            
+        });
+        //上下健事件
+        $("#tr_" + num + " input:text[id!='pro_code_" + num + "']").keyup(function (e) {
+            var idstart = $(this).attr("id").replace(num, "");
+            switch (e.keyCode) {
+                case 37:
+
+                    break;
+                case 38:
+                    if ($("#tr_" + num).prev().size() > 0) {
+                        $("#tr_" + num).prev().find("input[id^=" + idstart + "]").focus().select();
+                    }
+                    break;
+                case 39:
+
+                    break;
+                case 40:
+                    if ($("#tr_" + num).next().size() > 0) {
+                        $("#tr_" + num).next().find("input[id^=" + idstart + "]").focus().select();
+                    }
+                    break;
+            }
+        });
+
+
+        AutoPackFood(num);
+
+
+
+        if (product) {
+            $("#pro_code_" + num).val(product.ProCode);
+            $("#pro_no_" + num).val(product.ProNo);
+            $("#pro_name_" + num).val(product.ProName);
+            $("#pro_spec_" + num).val(product.Spec);
+            $("#pro_outday_" + num).val(product.OutDay);
+            $("#pro_unit_" + num).val(product.Unit);
+            $("#pro_ucount_" + num).val(product.UCount == null ? "1" : product.UCount);
+
+            if (product.Price)
+                $("#pro_price_" + num).val(product.Price)
+            else
+                $("#pro_price_" + num).val(0);
+
+            if (product.Ipc)
+                $("#pro_ipc_" + num).val(product.Ipc);
+            if (product.Count)
+                $("#pro_count_" + num).val(product.Count);
+            if (product.Sum)
+                $("#pro_sum_" + num).val(product.Sum);
+        }
+    }
+
+    function delRow(id) {
+        $("#tr_" + id).remove();
+        if ($("tr[id^=tr_]").size() == 0)
+            insertRow({});
+
+    }
+
+    function AutoPackFood(id) {
+        $("#pro_code_" + id).autocomplete(products, {
+            width: 400,
+            matchContains: true,
+            minChars: 0,
+            max: 20,
+            formatItem: function (row, i, max) {
+                return i + "/" + max + ": \"" + row.ProCode + "\" [" + row.ProName + "] /" + row.Spec;
+            },
+            formatMatch: function (row, i, max) {
+                return row.ProCode + " " + row.ProName + " " + row.CName + " " + row.ProNo;
+            },
+            formatResult: function (row) {
+                return row.ProCode;
+            }
+        }).
+                result(function (hander, item) {
+                    if (item == null)
+                        return;
+                    $("#pro_no_" + id).val(item.ProNo);
+                    $("#pro_name_" + id).val(item.ProName);
+                    $("#pro_spec_" + id).val(item.Spec);
+                    $("#pro_outday_" + id).val(item.OutDay);
+                    $("#pro_unit_" + id).val(item.Unit);
+                    $("#pro_ucount_" + id).val(item.UCount == null ? "1" : item.UCount);
+                    $("#pro_price_" + id).val(0);
+                });
+    }
+
+    function AutoOEntity() {
+        $("#OENTITYCODE").autocomplete(customers, {
+            width: 400,
+            matchContains: true,
+            minChars: 0,
+            max: 20,
+            mustMatch: true,
+            formatItem: function (row, i, max) {
+                return i + "/" + max + ": \"" + row.CustomerName + "\" [" + row.CustomerCode + "] " + row.OtherLink;
+            },
+            formatMatch: function (row, i, max) {
+                return row.CustomerCode + " " + row.CustomerName + " " + row.CName;
+            },
+            formatResult: function (row) {
+                return row.CustomerCode;
+            }
+        }).
+    result(function (hander, item) {
+        if (item == null)
+            return;
+        $("#OENTITYNAME").val(item.CustomerName == null ? "" : item.CustomerName);
+        $("#OMANAGER").val(item.LinkName == null ? "" : item.LinkName);
+        $("#OTEL").val(item.OtherLink == null ? "" : item.OtherLink);
+        $("#OADDRESS").val(item.Address2 == null ? "" : item.Address2);
+        //$("#priceType").val(item.Price == null ? "PRICE1" : item.Price);
+    });
+    }
+
+
+</script>

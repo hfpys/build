@@ -1,0 +1,12 @@
+[
+{ "proCode": "1234567890", "proNo": "1000", "proName": "商品名称A", "proSpec": "规格", "proUnit": "张", "proPrice": "100.0" },
+{ "proCode": "1234567891", "proNo": "1001", "proName": "商品名称B", "proSpec": "规格", "proUnit": "张", "proPrice": "101.0" },
+{ "proCode": "1234567892", "proNo": "1002", "proName": "商品名称C", "proSpec": "规格", "proUnit": "张", "proPrice": "102.0" },
+{ "proCode": "1234567893", "proNo": "1003", "proName": "商品名称D", "proSpec": "规格", "proUnit": "张", "proPrice": "103.0" },
+{ "proCode": "1234567894", "proNo": "1004", "proName": "商品名称E", "proSpec": "规格", "proUnit": "张", "proPrice": "104.0" },
+{ "proCode": "1234567895", "proNo": "1005", "proName": "商品名称F", "proSpec": "规格", "proUnit": "张", "proPrice": "105.0" },
+{ "proCode": "1234567896", "proNo": "1006", "proName": "商品名称H", "proSpec": "规格", "proUnit": "张", "proPrice": "106.0" },
+{ "proCode": "1234567897", "proNo": "1007", "proName": "商品名称I", "proSpec": "规格", "proUnit": "张", "proPrice": "107.0" },
+{ "proCode": "1234567898", "proNo": "1008", "proName": "商品名称J", "proSpec": "规格", "proUnit": "张", "proPrice": "108.0" },
+{ "proCode": "1234567899", "proNo": "1008", "proName": "商品名称K", "proSpec": "规格", "proUnit": "张", "proPrice": "109.0" }
+]

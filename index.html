@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>商品开单页面</title>
+    <link href="/css/bill.css" rel="stylesheet" />
+    <link href="/css/jquery.autocomplete.css" rel="stylesheet" />
+    <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="js/jquery.artDialog.source.js"></script>
+    <script type="text/javascript" src="js/artDialog.iframeTools.js"></script>
+    <script type="text/javascript" src="js/jquery.autocomplete.min.js"></script>
+    <script type="text/javascript">
+        var Pro = { "proCode": "1234567890", "proNo": "1000", "proName": "商品名称", "proSpec": "规格", "proUnit": "张", "proPrice": "100.0" }
+        var customers = [];
+        var products = [];
+
+        $(function () {
+            $.getJSON("js/customer.json", function (data) {
+                customers = data;
+            });
+
+            $.getJSON("js/product.json", function (data) {
+                products = data;
+            });
+
+        })
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

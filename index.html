@@ -17,10 +17,12 @@
         $(function () {
             $.getJSON("js/customer.json", function (data) {
                 customers = data;
+                alert(customers.length);
             });
 
             $.getJSON("js/product.json", function (data) {
                 products = data;
+                alert(products.length);
             });
 
         })

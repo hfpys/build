@@ -19,13 +19,15 @@
                 customers = data;
             });
 
-            $.getJSON("js/product.json", function (data) {
-                products = data;
+            $.getJSON("js/product.json", function (data2) {
+                products = data2;
             });
 
             insertRow();
 
         })
+
+        alert(customers.length);
     </script>
 </head>
 <body>
@@ -325,18 +327,15 @@
             formatResult: function (row) {
                 return row.ProCode;
             }
-        }).
-                result(function (hander, item) {
-                    if (item == null)
-                        return;
-                    $("#pro_no_" + id).val(item.ProNo);
-                    $("#pro_name_" + id).val(item.ProName);
-                    $("#pro_spec_" + id).val(item.Spec);
-                    $("#pro_outday_" + id).val(item.OutDay);
-                    $("#pro_unit_" + id).val(item.Unit);
-                    $("#pro_ucount_" + id).val(item.UCount == null ? "1" : item.UCount);
-                    $("#pro_price_" + id).val(0);
-                });
+        }).result(function (hander, item) {
+                if (item == null)
+                    return;
+                $("#pro_no_" + id).val(item.ProNo);
+                $("#pro_name_" + id).val(item.ProName);
+                $("#pro_spec_" + id).val(item.Spec);
+                $("#pro_unit_" + id).val(item.Unit);
+                $("#pro_price_" + id).val(0);
+            });
     }
 
     function AutoOEntity() {

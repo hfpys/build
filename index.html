@@ -6,64 +6,28 @@
     <link href="css/bill.css" rel="stylesheet" />
     <link href="css/jquery.autocomplete.css" rel="stylesheet" />
     <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
-    <script type="text/javascript" src="js/Common.js"></script>
     <script type="text/javascript" src="js/jquery.artDialog.source.js"></script>
     <script type="text/javascript" src="js/artDialog.iframeTools.js"></script>
     <script type="text/javascript" src="js/jquery.autocomplete.min.js"></script>
-    <script type="text/javascript" src="js/RMB.js"></script>
     <script type="text/javascript">
         var Pro = { "proCode": "1234567890", "proNo": "1000", "proName": "商品名称", "proSpec": "规格", "proUnit": "张", "proPrice": "100.0" }
         var customers = [];
         var products = [];
 
         $(function () {
-            customers = [
-                        {  "Manager": "张玉辉", "Tel": "88861388", "LinkName": "张玉辉", "OtherLink": "88861388", "Address": "合肥市荷城街道办西安升平街26号" },
-                        {  "Manager": "林武忠", "Tel": "88861381", "LinkName": "林武忠", "OtherLink": null, "Address": "合肥市桂城南桂东路38号9楼" },
-                        {  "Manager": "张亚林", "Tel": "15816066663", "LinkName": "张亚林", "OtherLink": "15816066663", "Address": "合肥市荷城街道办荷城文华路436号首层及二层" },
-                        {  "Manager": "阮建中", "Tel": "15816066664", "LinkName": "阮建中", "OtherLink": null, "Address": "合肥市荷城街道文华路兴华市场" }
-                        ];
+            $.getJSON("js/customer.json", function (data) {
+                customers = data;
+            });
 
-            products = [
-                        { "ProCode": "1234567890", "ProNo": "1000", "ProName": "商品名称A", "Spec": "规格", "Unit": "张", "Price": "100.0" },
-                        { "ProCode": "1234567891", "ProNo": "1001", "ProName": "商品名称B", "Spec": "规格", "Unit": "张", "Price": "101.0" },
-                        { "ProCode": "1234567892", "ProNo": "1002", "ProName": "商品名称C", "Spec": "规格", "Unit": "张", "Price": "102.0" },
-                        { "ProCode": "1234567893", "ProNo": "1003", "ProName": "商品名称D", "Spec": "规格", "Unit": "张", "Price": "103.0" },
-                        { "ProCode": "1234567894", "ProNo": "1004", "ProName": "商品名称E", "Spec": "规格", "Unit": "张", "Price": "104.0" },
-                        { "ProCode": "1234567895", "ProNo": "1005", "ProName": "商品名称F", "Spec": "规格", "Unit": "张", "Price": "105.0" },
-                        { "ProCode": "1234567896", "ProNo": "1006", "ProName": "商品名称H", "Spec": "规格", "Unit": "张", "Price": "106.0" },
-                        { "ProCode": "1234567897", "ProNo": "1007", "ProName": "商品名称I", "Spec": "规格", "Unit": "张", "Price": "107.0" },
-                        { "ProCode": "1234567898", "ProNo": "1008", "ProName": "商品名称J", "Spec": "规格", "Unit": "张", "Price": "108.0" },
-                        { "ProCode": "1234567899", "ProNo": "1008", "ProName": "商品名称K", "Spec": "规格", "Unit": "张", "Price": "109.0" }
-                       ]
+            $.getJSON("js/product.json", function (data2) {
+                products = data2;
+            });
 
-            initpage();
+            insertRow();
 
-            insertRow(Pro);
-
-            EnterToTab();
-            
         })
 
-        function initpage() {
-            AutoOEntity();
-            
-        }
-
-
-        function EnterToTab() {
-            var $inp = $('.tableEditHead input:text');
-            $inp.bind('keypress', function (e) {
-                var key = e.which;
-                if (key == 13) {
-                    e.preventDefault();
-                    var nxtIdx = $inp.index(this) + 1;
-                    $(":input:text:eq(" + nxtIdx + ")").focus();
-                    $(":input:text:eq(" + nxtIdx + ")").select();
-                }
-            });
-        }
-
+        alert(customers.length);
     </script>
 </head>
 <body>
@@ -91,14 +55,14 @@
                     <td></td>
                     <td>客户姓名：</td>
                     <td colspan="2">
-                        <input id="OMANAGER" name="OMANAGER" type="text" value="" />
+                        <input id="OENTITYCODE" name="OENTITYCODE" ondblclick="OpenSelectCustomer()" type="text" value="" /><!--<input id="oentitycode" name="oentitycode" ondblclick="OpenSelectCustomer()"/>-->/
                         <div class="tipDiv" id="tipOENTITYCODE"></div>
                     </td>
-                    <td>电话：<input id="OTEL" name="OTEL" type="text" style="width:200px" value="" /></td>
+                    <td><input id="OENTITYNAME" name="OENTITYNAME" type="text" value="" /></td>
                     <td></td>
                     <td></td>
-                    <td colspan="2"></td>
-                    <td colspan="2"></td>
+                    <td colspan="2">联系人：<input id="OMANAGER" name="OMANAGER" style="width:75px" type="text" value="" /></td>
+                    <td colspan="2">电话：<input id="OTEL" name="OTEL" style="width:90px" type="text" value="" /></td>
                 </tr>
                 <tr>
                     <td></td>
@@ -119,8 +83,9 @@
                 <col style="width:110px;" />
                 <col style="width:60px;" />
                 <col />
-                <col style="width:100px;" />
+                <col style="width:60px;" />
                 <col style="width:35px;" />
+                <col style="width:65px;" />
                 <col style="width:50px;" />
                 <col style="width:50px;" />
                 <col style="width:75px;" />
@@ -133,6 +98,7 @@
                     <th>名称</th>
                     <th>规格</th>
                     <th>单位</th>
+                    <th>生产日期</th>
                     <th>数量</th>
                     <th>单价</th>
                     <th>小计</th>
@@ -141,7 +107,7 @@
             </thead>
             <tbody>
                 <tr id="sumtr">
-                    <td colspan="4" style="text-align:right;" id="chsum"></td>
+                    <td colspan="5" style="text-align:right;" id="chsum"></td>
                     <td colspan="3" style="text-align:right;" id="countsum">0</td>
                     <td colspan="2"><div class="addrow" onclick="insertRow(Pro)">增加一行</div></td>
                 </tr>
@@ -186,10 +152,11 @@
         row += "<td><input id='pro_name_" + num + "'/></td>";//名称
         row += "<td><input id='pro_spec_" + num + "'/></td>";//规格
         row += "<td><input id='pro_unit_" + num + "'/></td>";//单位
+        row += "<td><input id='pro_ipc_" + num + "'/></td>";//生产日期
         row += "<td><input id='pro_count_" + num + "'/></td>";//数量
         row += "<td><input style='text-align:right;'id='pro_price_" + num + "'/></td>";// 单价
         row += "<td><input style='text-align:right;'id='pro_sum_" + num + "'/></td>";//小计
-        row += "<td style='text-align:center'><a href='javascript:void(0)' style='color:#000' onclick='delRow(" + num + ")'  src='/Content/themes/common/Imgs/billsdel.gif' alt=''>删除</a></td>";//删除
+        row += "<td style='text-align:center'><a onclick='delRow(" + num + ")'  src='/Content/themes/common/Imgs/billsdel.gif' alt=''>删除</a></td>";//删除
         row += "</tr>";
         $("#sumtr").before(row);
 
@@ -270,7 +237,23 @@
                 return false; //取消默认的提交行为
             }
         });
-        
+
+        //$("#pro_ipc_" + num).mask("99999999")
+        //生产日期
+        $("#pro_ipc_" + num).blur(function () {
+            if ($("#pro_code_" + num).val() == "" || $("#pro_ipc_" + num).val() == "")
+                return;
+
+            if ($("#pro_ipc_" + num).val() != "" && !$("#pro_ipc_" + num).val().isDate()) {
+                tipMessage("生产日期信息填写不正确");
+                $("#pro_ipc_" + num).select().focus();
+                return;
+            }
+        });
+        //生产日期获取焦点
+        $("#pro_ipc_" + num).focus(function () {
+            
+        });
         //上下健事件
         $("#tr_" + num + " input:text[id!='pro_code_" + num + "']").keyup(function (e) {
             var idstart = $(this).attr("id").replace(num, "");
@@ -304,12 +287,14 @@
             $("#pro_no_" + num).val(product.ProNo);
             $("#pro_name_" + num).val(product.ProName);
             $("#pro_spec_" + num).val(product.Spec);
+            $("#pro_outday_" + num).val(product.OutDay);
             $("#pro_unit_" + num).val(product.Unit);
+            $("#pro_ucount_" + num).val(product.UCount == null ? "1" : product.UCount);
 
             if (product.Price)
                 $("#pro_price_" + num).val(product.Price)
             else
-            $("#pro_price_" + num).val(0);
+                $("#pro_price_" + num).val(0);
 
             if (product.Ipc)
                 $("#pro_ipc_" + num).val(product.Ipc);
@@ -354,28 +339,29 @@
     }
 
     function AutoOEntity() {
-        $("#OMANAGER").autocomplete(customers, {
+        $("#OENTITYCODE").autocomplete(customers, {
             width: 400,
             matchContains: true,
             minChars: 0,
             max: 20,
             mustMatch: true,
             formatItem: function (row, i, max) {
-                return i + "/" + max + ": \"" + row.Manager + "\" [" + row.Tel + "] " + row.Address;
+                return i + "/" + max + ": \"" + row.CustomerName + "\" [" + row.CustomerCode + "] " + row.OtherLink;
             },
             formatMatch: function (row, i, max) {
-                return row.Manager + " " + row.Tel + " " + row.Address;
+                return row.CustomerCode + " " + row.CustomerName + " " + row.CName;
             },
             formatResult: function (row) {
-                return row.OMANAGER;
+                return row.CustomerCode;
             }
         }).
     result(function (hander, item) {
         if (item == null)
             return;
-        $("#OMANAGER").val(item.Manager == null ? "" : item.Manager);
-        $("#OTEL").val(item.Tel == null ? "" : item.Tel);
-        $("#OADDRESS").val(item.Address == null ? "" : item.Address);
+        $("#OENTITYNAME").val(item.CustomerName == null ? "" : item.CustomerName);
+        $("#OMANAGER").val(item.LinkName == null ? "" : item.LinkName);
+        $("#OTEL").val(item.OtherLink == null ? "" : item.OtherLink);
+        $("#OADDRESS").val(item.Address2 == null ? "" : item.Address2);
         //$("#priceType").val(item.Price == null ? "PRICE1" : item.Price);
     });
     }

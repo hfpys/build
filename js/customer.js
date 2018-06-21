@@ -1,0 +1,12 @@
+[
+{"CustomerCode":"440684000002558","CustomerName":"合肥市高明区供销集体商业西安经理部","Manager":"张玉辉","Tel":"88861388","LinkName":"张玉辉","OtherLink":"88861388","Address":"合肥市高明区荷城街道办西安升平街26号","Address2":"合肥市高明区荷城街道办西安升平街26号","Price":null,"CName":"BSSGMQGXJTSYXAJLB"},
+{"CustomerCode":"440684600131882","CustomerName":"合肥市高明区荷城纯心鲜奶店","Manager":"何连英","Tel":"  ","LinkName":"何连英","OtherLink":"  ","Address":"合肥市高明区荷城街道文华路路发楼109号","Address2":"合肥市高明区荷城街道文华路路发楼109号","Price":null,"CName":"BSSGMQHCCXXND"},
+{"CustomerCode":"440684600002171","CustomerName":"合肥市高明区伟庆副食购销部","Manager":null,"Tel":"88513666;88684388","LinkName":null,"OtherLink":"88513666;88684388","Address":"合肥市高明区荷城街道河江广平街2号2座101-104","Address2":"合肥市高明区荷城街道河江广平街2号2座101-104","Price":null,"CName":"BSSGMQWQFSGXB"},
+{"CustomerCode":"440682600298321","CustomerName":"内蒙古","Manager":null,"Tel":null,"LinkName":null,"OtherLink":null,"Address":"合肥市南海区大沥民富路51号首层","Address2":"合肥市南海区大沥民富路51号首层","Price":null,"CName":"NMG"},
+{"CustomerCode":"440682500009819","CustomerName":"广州统一企业有限公司佛山营业所","Manager":"林武忠","Tel":null,"LinkName":"林武忠","OtherLink":null,"Address":"合肥市南海区桂城南桂东路38号9楼","Address2":"合肥市南海区桂城南桂东路38号9楼","Price":null,"CName":"GZTYQYYXGSBSYYS"},
+{"CustomerCode":"440684600156744","CustomerName":"合肥市高明区万隆购物广场 （张金波）","Manager":"张亚林","Tel":"15816066663","LinkName":"张亚林","OtherLink":"15816066663","Address":"合肥市高明区荷城街道办荷城文华路436号首层及二层","Address2":"合肥市高明区荷城街道办荷城文华路436号首层及二层","Price":null,"CName":"BSSGMQWLGWGC （ZJB）"},
+{"CustomerCode":"44068420013351","CustomerName":"香江购物连锁商场","Manager":"陈江虹","Tel":null,"LinkName":"陈江虹","OtherLink":null,"Address":"高明沧江路爱群大厦首层","Address2":"高明沧江路爱群大厦首层","Price":null,"CName":"XJGWLSSC"},
+{"CustomerCode":"440684000013857","CustomerName":"合肥市高明区香江连锁商场有限公司一佳商场","Manager":"阮建中","Tel":null,"LinkName":"阮建中","OtherLink":null,"Address":"合肥市高明区荷城街道文华路兴华市场","Address2":"合肥市高明区荷城街道文华路兴华市场","Price":null,"CName":"BSSGMQXJLSSCYXGSYJSC"},
+{"CustomerCode":"440684000000669","CustomerName":"合肥市高明区香江连锁商场有限公司翠岸碧桂店","Manager":"阮建中","Tel":null,"LinkName":"阮建中","OtherLink":null,"Address":"合肥市高明区荷城街道三洲百灵路碧桂园内","Address2":"合肥市高明区荷城街道三洲百灵路碧桂园内","Price":null,"CName":"BSSGMQXJLSSCYXGSCABGD"},
+{"CustomerCode":"440684000025231","CustomerName":"合肥市高明区香江连锁商场有限公司合水店","Manager":"阮建中","Tel":"0757-88877682 /88877683","LinkName":"阮建中","OtherLink":"0757-88877682 /88877683","Address":"合肥市高明区更合镇合水市场内A座","Address2":"合肥市高明区更合镇合水市场内A座","Price":null,"CName":"BSSGMQXJLSSCYXGSHSD"}
+]
